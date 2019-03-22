@@ -9,5 +9,5 @@ time = datetime.datetime.now()
 temp = sense.get_temperature()
 humid = sense.get_humidity()
 
-print('DateTime: ' + str(time) + ' | Temp: {0:0.1f}'.format(temp) + ' | Humidity: {0:0.0f}'.format(humid))
+print('DateTime: {:%Y-%m-%d %H:%M:%S}'.format(time) + ' | Temp: {0:0.1f}'.format(temp) + ' | Humidity: {0:0.0f}'.format(humid))
 sense.clear()
