@@ -1,12 +1,44 @@
 # from sense_hat import SenseHat        # Use this if only want to run on Pi
 from sensehat import SenseHat           # Use this if run on both Pi and Computer
-import datetime
-import sqlite3
+import time
+import sqlite3 as lite
+dbname = 'sensedata.db'
+sample_freq = 1 # time in seconds
 
 def main():
     sense = SenseHat()
-    for x in range(0, 3):
+    create_dbtable()
+
+    for i in range(0, 3):
         sense.getSenseData()
-        sense.logData()
+        save_dbdata(sense.time, sense.temp, sense.humid)
+        time.sleep(sample_freq)
+    
+    read_dbdata()
+
+def create_dbtable():
+    conn = lite.connect(dbname)
+    curs = conn.cursor()
+    curs.execute("DROP TABLE IF EXISTS TEMP_HUMID")
+    curs.execute("CREATE TABLE TEMP_HUMID(timestamp DATETIME, temp NUMERIC, humid NUMERIC)")
+    conn.commit()
+    conn.close()
+
+def save_dbdata(time, temp, humid):
+    conn = lite.connect(dbname)
+    curs = conn.cursor()
+    curs.execute("INSERT INTO TEMP_HUMID values(datetime('now'), (?), (?))", (temp, humid))
+    conn.commit()
+    conn.close()
+    
+
+def read_dbdata():
+    conn = lite.connect(dbname)
+    curs = conn.cursor()
+    results = curs.execute("SELECT * FROM TEMP_HUMID")
+    for row in results:
+        print(row)
+    conn.close()
+                
 
 main()

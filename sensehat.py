@@ -12,9 +12,12 @@ class SenseHat():
         self.sense = VirtualSenseHat.getSenseHat()
 
     def getSenseData(self):
+        self.sense.clear()
         self.time = datetime.datetime.now()
         self.temp = self.sense.get_temperature()
         self.humid = self.sense.get_humidity()
+        self.sense.show_message('Temp: {0:0.1f}c'.format(self.temp) + 
+        ' Humid: {0:0.0f}'.format(self.humid), scroll_speed=0.05)
 
     def logData(self):
         if( self.time and self.temp and self.humid):
