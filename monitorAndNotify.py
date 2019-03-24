@@ -1,13 +1,12 @@
-# Use the following line if only need to run on Pi
-# from sense_hat import SenseHat    
-from virtual_sense_hat import VirtualSenseHat
+# from sense_hat import SenseHat        # Use this if only want to run on Pi
+from sensehat import SenseHat           # Use this if run on both Pi and Computer
 import datetime
+import sqlite3
 
-sense = VirtualSenseHat.getSenseHat()
+def main():
+    sense = SenseHat()
+    for x in range(0, 3):
+        sense.getSenseData()
+        sense.logData()
 
-time = datetime.datetime.now()
-temp = sense.get_temperature()
-humid = sense.get_humidity()
-
-print('DateTime: {:%Y-%m-%d %H:%M:%S}'.format(time) + ' | Temp: {0:0.1f}'.format(temp) + ' | Humidity: {0:0.0f}'.format(humid))
-sense.clear()
+main()
