@@ -1,7 +1,9 @@
-# from sense_hat import SenseHat        # Use this if only want to run on Pi
-from sensehat import SenseHat           # Use this if run on both Pi and Computer
 import time
 import sqlite3 as lite
+# from sense_hat import SenseHat        # Use this if only want to run on Pi
+from sensehat import SenseHat           # Use this if run on both Pi and Computer
+from processjson import Range           # A utility class to read from Json file
+
 dbname = 'sensedata.db'
 sample_freq = 1 # time in seconds
 
@@ -31,8 +33,8 @@ def save_dbdata(time, temp, humid):
     conn.commit()
     conn.close()
     
-
 def read_dbdata():
+    print("Read all content from Database " + dbname)
     conn = lite.connect(dbname)
     curs = conn.cursor()
     results = curs.execute("SELECT * FROM TEMP_HUMID")

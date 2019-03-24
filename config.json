@@ -1,0 +1,6 @@
+{
+    "min_temperature": 20,
+    "max_temperature": 40,
+    "min_humidity": 40,
+    "max_humidity": 60
+}

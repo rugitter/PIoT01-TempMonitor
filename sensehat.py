@@ -14,11 +14,14 @@ class SenseHat():
     def getSenseData(self):
         self.sense.clear()
         self.time = datetime.datetime.now()
-        self.temp = self.sense.get_temperature()
-        self.humid = self.sense.get_humidity()
+
+        self.temp = round(self.sense.get_temperature(), 1)
+        self.humid = round(self.sense.get_humidity())
+        # If not connected Pi device, will print out on console
         self.sense.show_message('Temp: {0:0.1f}c'.format(self.temp) + 
         ' Humid: {0:0.0f}'.format(self.humid), scroll_speed=0.05)
 
+    # Not in use - Use to print data to Console
     def logData(self):
         if( self.time and self.temp and self.humid):
             print('DateTime: {:%Y-%m-%d %H:%M:%S}'.format(self.time) + 
