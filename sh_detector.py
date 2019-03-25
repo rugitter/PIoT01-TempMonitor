@@ -2,11 +2,11 @@ from virtual_sense_hat import VirtualSenseHat
 import datetime
 import sqlite3
 
-class SenseHat():
-    time = None
-    temp = None
-    humid = None
-    sense = None
+class SHDetector():
+    # time = None   # Those are same to static variables in Java
+    # temp = None
+    # humid = None
+    # sense = None
 
     def __init__(self):
         self.sense = VirtualSenseHat.getSenseHat()
