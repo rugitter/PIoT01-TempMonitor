@@ -18,6 +18,11 @@ def main():
         database.save_dbdata(detector.time, detector.temp, detector.humid)
         time.sleep(sample_freq)
     
-    database.read_dbdata()                
+    database.read_dbdata()
+
+    database.save_daily_data('OK','')
+    database.save_daily_data('BAD',': 5 *C below minimum temperature')
+    database.read_daily_data()   
+    # database.clear_dbdata()     # Uncomment this line if what to clear dumy data     
 
 main()

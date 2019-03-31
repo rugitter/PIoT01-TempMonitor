@@ -2,10 +2,6 @@ import json
 filename = 'config.json'
 
 class Range:
-    # MIN_TEMPERATURE
-    # MAX_TEMPERATURE
-    # MIN_HUMIDITY
-    # MAX_HUMIDITY
 
     def __init__(self):
         with open(filename, 'r') as file:
