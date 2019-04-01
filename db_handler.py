@@ -5,6 +5,7 @@ import datetime
 class Database():
     def __init__(self):
         self.dbname = 'sensedata.db'
+        self.today_date = datetime.datetime.today().strftime("%Y-%m-%d")
 
     def create_dbtable(self):
         if(not(os.path.isfile('./' + self.dbname))):
@@ -12,7 +13,7 @@ class Database():
                 curs = conn.cursor()
                 curs.execute("DROP TABLE IF EXISTS TEMP_HUMID")
                 curs.execute("CREATE TABLE TEMP_HUMID(timestamp DATETIME, temp NUMERIC, humid NUMERIC)")
-                curs.execute("CREATE TABLE DAILY_REPORT(datestamp DATE, status STRING, msg STRING)")
+                curs.execute("CREATE TABLE DAILY_REPORT(datestamp DATE, status STRING)")
                 conn.commit()
 
     def save_dbdata(self, time, temp, humid):
@@ -40,10 +41,17 @@ class Database():
             curs.execute("DELETE FROM TEMP_HUMID")
             conn.commit()
 
-    def save_daily_data(self, status, msg):
+    def save_daily_data(self, status):
         with lite.connect(self.dbname) as conn:
             curs = conn.cursor()
-            curs.execute("INSERT INTO DAILY_REPORT(datestamp, status, msg) values(date('now', 'localtime'), (?), (?))", (status, msg))
+            curs.execute("INSERT INTO DAILY_REPORT(datestamp, status) values(date('now', 'localtime'), (?))", (status,))
+            conn.commit()
+    
+    def update_daily_data(self, status):
+        with lite.connect(self.dbname) as conn:
+            curs = conn.cursor()
+            
+            curs.execute("UPDATE DAILY_REPORT SET status = (?) WHERE datestamp = (?)", (status, self.today_date))
             conn.commit()
     
     def read_daily_data(self):
@@ -65,12 +73,22 @@ class Database():
             curs.execute("DELETE FROM DAILY_REPORT")
             conn.commit()
 
-    def get_today_status(self):
-        today_date = datetime.datetime.today().strftime("%Y-%m-%d")
+    # Check if today's status exists in the daily report database
+    def check_status_exist(self):
+        
 
         with lite.connect(self.dbname) as conn:
             curs = conn.cursor()
-            results = curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?)", (today_date,))
-            for row in results:
-                status = row[1]
-                print(status)
+            curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?) LIMIT 1", (self.today_date,))
+            rs = curs.fetchone()
+
+            if rs == None:
+                print("Record not exist!")
+                return False
+                # results = curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?) LIMIT 1", (today_date,))
+                # for row in rs:
+                #     status = row[1]
+                #     print(status)
+            else:
+                print("Record exist!")
+                return True

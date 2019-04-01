@@ -17,28 +17,27 @@ def main():
     compare = Compare()
     notice = BulletNotice()
 
-    database.get_today_status()
+    database.create_dbtable()   # create sqlite3 db file if not existing, plus tables
+    num_of_notice = 0       # record of notification sent today
+    # print(database.check_status_exist())
 
-    database.create_dbtable()
+    database.save_daily_data('OK')
 
-    for _ in range(0, 3):
+    for _ in range(0, 5):
         detector.getSenseData()
         database.save_dbdata(detector.time, detector.temp, detector.humid)
         status = compare.compare_data(detector.temp, detector.humid)
+        print("status is " + status)
 
-        if status == "OK":
-            print("status is OK")
-        else:
-            print("status is " + status)
+        if status != "OK" and num_of_notice < 1:
+            print("num_of_notice = " + str(num_of_notice) )
+            database.update_daily_data(status)
             notice.send_notification(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status)
-            # database.save_daily_data()
-        
+            num_of_notice += 1
+
         time.sleep(sample_freq)
     
     database.read_dbdata()
-
-    # database.save_daily_data('OK','')
-    # database.save_daily_data('BAD',': 5 *C below minimum temperature')
     database.read_daily_data()
 
     database.clear_dbdata()         # Uncomment this line if what to clear dumy data

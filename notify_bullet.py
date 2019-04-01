@@ -1,3 +1,7 @@
+""" Original provided by Matthew Bolger in tutorial at course
+    Programming Internet of Things (COSC2755) RMIT University
+    for teaching purposes
+"""
 #!/usr/bin/env python3
 import requests
 import json
