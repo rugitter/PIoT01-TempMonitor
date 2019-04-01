@@ -41,7 +41,6 @@ def main():
     # database.save_daily_data('BAD',': 5 *C below minimum temperature')
     database.read_daily_data()
 
-
     database.clear_dbdata()         # Uncomment this line if what to clear dumy data
     database.clear_daily_data()     # Uncomment this line if what to clear dumy data
 
