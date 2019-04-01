@@ -21,10 +21,5 @@ if __name__ == "__main__":
     cr = CreateReport()
     cr.CreatCSV(Database().read_daily_data())
 
-        
-        
-
-
-
 # db = Database()
 
