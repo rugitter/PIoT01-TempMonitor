@@ -2,7 +2,7 @@ from processjson import Range
 
 # Compare the temp and humi data with config
 class Compare():
-    def CompareData(self, temp, hum):
+    def compare_data(self, temp, hum):
         r = Range()
         status = ""
         reason = ""
@@ -29,5 +29,4 @@ class Compare():
             return status + ": " + reason
         
         status = "OK"
-
         return status 

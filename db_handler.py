@@ -1,5 +1,6 @@
 import sqlite3 as lite
 import os
+import datetime
 
 class Database():
     def __init__(self):
@@ -54,6 +55,22 @@ class Database():
                   
             for row in results:
                 my_list.append(row)
-        print(my_list)
-        
+        print(my_list)       
         return my_list
+    
+    def clear_daily_data(self):
+        print("Delete all records in the table DAILY_REPORT!")
+        with lite.connect(self.dbname) as conn:
+            curs = conn.cursor()
+            curs.execute("DELETE FROM DAILY_REPORT")
+            conn.commit()
+
+    def get_today_status(self):
+        today_date = datetime.datetime.today().strftime("%Y-%m-%d")
+
+        with lite.connect(self.dbname) as conn:
+            curs = conn.cursor()
+            results = curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?)", (today_date,))
+            for row in results:
+                status = row[1]
+                print(status)

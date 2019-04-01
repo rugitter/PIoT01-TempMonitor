@@ -6,7 +6,6 @@ class Range:
     def __init__(self):
         with open(filename, 'r') as file:
             data = json.load(file)
-        print(data)
 
         self.MIN_TEMPERATURE = data['min_temperature']
         self.MAX_TEMPERATURE = data['max_temperature']
