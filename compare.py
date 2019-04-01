@@ -10,12 +10,12 @@ class Compare():
         
         if temp < r.get_min_temp():
             status = "BAD"
-            reason = "%f *C below minimum temperature" %(r.get_min_temp() - temp) 
+            reason = "%.1f *C below minimum temperature" %(r.get_min_temp() - temp) 
             return status + ": " + reason
 
         if temp > r.get_max_temp():
             status = "BAD"
-            reason = "%f *C above maximum temperature" %(temp - r.get_max_temp())
+            reason = "%.1f *C above maximum temperature" %(temp - r.get_max_temp())
             return status + ": " + reason
 
         if hum < r.get_min_humid():
