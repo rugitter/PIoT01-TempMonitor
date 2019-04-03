@@ -42,5 +42,5 @@ def main():
 
     database.clear_dbdata()         # Uncomment this line if what to clear dumy data
     database.clear_daily_data()     # Uncomment this line if what to clear dumy data
-
+    
 main()
