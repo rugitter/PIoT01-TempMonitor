@@ -1,5 +1,4 @@
 import sqlite3 as lite
-import os
 import datetime
 
 class Database():
@@ -8,13 +7,11 @@ class Database():
         self.today_date = datetime.datetime.today().strftime("%Y-%m-%d")
 
     def create_dbtable(self):
-        if(not(os.path.isfile('./' + self.dbname))):
-            with lite.connect(self.dbname) as conn:
-                curs = conn.cursor()
-                curs.execute("DROP TABLE IF EXISTS TEMP_HUMID")
-                curs.execute("CREATE TABLE TEMP_HUMID(timestamp DATETIME, temp NUMERIC, humid NUMERIC)")
-                curs.execute("CREATE TABLE DAILY_REPORT(datestamp DATE, status STRING)")
-                conn.commit()
+        with lite.connect(self.dbname) as conn:
+            curs = conn.cursor()
+            curs.execute("CREATE TABLE TEMP_HUMID(timestamp DATETIME, temp NUMERIC, humid NUMERIC)")
+            curs.execute("CREATE TABLE DAILY_REPORT(datestamp DATE, status STRING)")
+            conn.commit()
 
     def save_dbdata(self, time, temp, humid):
         with lite.connect(self.dbname) as conn:

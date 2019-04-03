@@ -2,14 +2,20 @@ from virtual_sense_hat import VirtualSenseHat
 import datetime
 import sqlite3
 
-class SHDetector():
-    # time = None   # Those are same to static variables in Java
-    # temp = None
-    # humid = None
-    # sense = None
-
+class SHDetector:
     def __init__(self):
         self.sense = VirtualSenseHat.getSenseHat()
+    
+    # Accessor
+    # Get time in the format of 2019-03-30 14:04:05 - Melbouren local time
+    def getTime(self):
+        return self.time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    def getTemp(self):
+        return self.temp
+    
+    def getHumid(self):
+        return self.humid
 
     def getSenseData(self):
         self.sense.clear()
