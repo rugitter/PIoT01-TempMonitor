@@ -54,8 +54,8 @@ class Monitor:
         self.database.read_dbdata()
         self.database.read_daily_data()
 
-        self.database.clear_dbdata()         # Uncomment this line if what to clear dumy data
-        self.database.clear_daily_data()     # Uncomment this line if what to clear dumy data
+        # self.database.clear_dbdata()         # Uncomment this line if what to clear dumy data
+        # self.database.clear_daily_data()     # Uncomment this line if what to clear dumy data
 
 if __name__ == "__main__":
     monitor = Monitor()
