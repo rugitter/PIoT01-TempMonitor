@@ -5,7 +5,7 @@ import os
 # from sense_hat import SenseHat        # Use this if only want to run on Pi
 from sh_detector import SHDetector      # Use this if run on both Pi and Computer
 from processjson import Range           # A utility class to read from Json file
-from db_handler import Database
+from db_handler import Database         # A utility class to handle all db operations
 from compare import Compare             # A utility class used to compare temp and humid
 from notify_bullet import BulletNotice  # A utility class used to send bullet notification
 
@@ -18,8 +18,6 @@ class Monitor:
         self.database = Database()
 
         self.dbname = 'sensedata.db'
-        # self.sample_freq = 60       # time in seconds, change to 60 for pi
-        # self.num_of_notice = 0      # record of notification sent today
 
         if(not(os.path.isfile('./' + self.dbname))):
             self.database.create_dbtable()   # create db and tables if db file not existing
@@ -38,7 +36,6 @@ class Monitor:
         humid = self.detector.getHumid()
 
         status = self.compare.compare_data(temp, humid)   # defect code exists here
-        # status = "OK"       # For testing purpose - This works
         self.detector.sense.show_message("Status:" + status, scroll_speed=0.05)
 
         # Save the monitored temperature and humidity with current time to DB - TEMP_HUMID table
@@ -52,10 +49,6 @@ class Monitor:
             self.database.update_daily_data(status)
             self.detector.sense.show_message("DBUpdated", scroll_speed=0.05)
             self.notice.send_notification(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status)
-            # self.num_of_notice += 1
-            # print("num_of_notice = " + str(self.num_of_notice) )
-
-        # time.sleep(self.sample_freq)      
 
         # self.database.read_dbdata()
         # self.database.read_daily_data()
