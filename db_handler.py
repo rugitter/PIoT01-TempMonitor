@@ -1,10 +1,13 @@
 import sqlite3 as lite
 import datetime
+import re
 
 class Database():
     def __init__(self):
         self.dbname = 'sensedata.db'
         self.today_date = datetime.datetime.today().strftime("%Y-%m-%d")
+        self.REGEX_BAD = "^BAD.*"
+        self.REGEX_OK = "^OK.*"
 
     def create_dbtable(self):
         with lite.connect(self.dbname) as conn:
@@ -72,20 +75,17 @@ class Database():
 
     # Check if today's status exists in the daily report database
     def check_status_exist(self):
-        
-
         with lite.connect(self.dbname) as conn:
             curs = conn.cursor()
             curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?) LIMIT 1", (self.today_date,))
             rs = curs.fetchone()
-
+            
             if rs == None:
                 print("Record not exist!")
-                return False
-                # results = curs.execute("SELECT * FROM DAILY_REPORT WHERE datestamp = (?) LIMIT 1", (today_date,))
-                # for row in rs:
-                #     status = row[1]
-                #     print(status)
+                return 0
+            elif re.search(self.REGEX_OK, rs[1]):
+                print("Record exist and is OK!")
+                return 1
             else:
-                print("Record exist!")
-                return True
+                print("Record exist and is BAD!")
+                return 2

@@ -19,44 +19,46 @@ class Monitor:
 
         self.dbname = 'sensedata.db'
         # self.sample_freq = 60       # time in seconds, change to 60 for pi
-        self.num_of_notice = 0      # record of notification sent today
+        # self.num_of_notice = 0      # record of notification sent today
 
         if(not(os.path.isfile('./' + self.dbname))):
-            self.database.create_dbtable()   # create sqlite3 db file if not existing, plus tables
+            self.database.create_dbtable()   # create db and tables if db file not existing
 
     def main(self):
-        # print(database.check_status_exist())
-        # Pre-save a "OK" status as today's status record in the DAILY_REPORT table
-        self.database.save_daily_data('OK')
+        # Check if today's status alreay exist in DAILY_REPORT DB, and return
+        # 0 - if not exist, 1 - if exist and is OK, 2 - if exist and is BAD
+        status_num = self.database.check_status_exist()     
+        if status_num == 0:         # If status not exists, pre-save a "OK" as today's status
+            self.database.save_daily_data('OK')
 
-        # Repeated monitor the temp and humid for 1 hour (60 times)
         # for _ in range(0, 5):
         self.detector.getSenseData()
         monitor_time = self.detector.getTime()
         temp = self.detector.getTemp()
         humid = self.detector.getHumid()
 
-        # status = self.compare.compare_data(temp, humid)
-        status = "OK"       # For testing purpose - This works
+        status = self.compare.compare_data(temp, humid)   # defect code exists here
+        # status = "OK"       # For testing purpose - This works
         self.detector.sense.show_message("Status:" + status, scroll_speed=0.05)
 
         # Save the monitored temperature and humidity with current time to DB - TEMP_HUMID table
         self.database.save_dbdata(monitor_time, temp, humid)
         self.detector.sense.show_message("DBSaved", scroll_speed=0.05)
         
-        # If monitored temp or humid exceed the boundary, and for the 1st time of the day
-        # Save the calculated status to DB - DAILY_REPORT table
-        if status != "OK" and self.num_of_notice < 1:
-            print("num_of_notice = " + str(self.num_of_notice) )
+        # If exceed boundary - status is bad, 
+        # and current saved status in DB is OK,
+        # then update status in DB and send notification (once per day)
+        if status != "OK" and status_num == 1:
             self.database.update_daily_data(status)
             self.detector.sense.show_message("DBUpdated", scroll_speed=0.05)
             self.notice.send_notification(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status)
-            self.num_of_notice += 1
+            # self.num_of_notice += 1
+            # print("num_of_notice = " + str(self.num_of_notice) )
 
         # time.sleep(self.sample_freq)      
 
-        self.database.read_dbdata()
-        self.database.read_daily_data()
+        # self.database.read_dbdata()
+        # self.database.read_daily_data()
 
         # self.database.clear_dbdata()         # Uncomment this line if what to clear dumy data
         # self.database.clear_daily_data()     # Uncomment this line if what to clear dumy data
