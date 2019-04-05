@@ -1,0 +1,10 @@
+1. Data type: Discrete data for temprature and humidity every minute during a period of time each day.
+   Number of data: 60 sets of data each day.
+   So it's not practical to plot them all in the diagram. 1. consuming computing power	2. For the 60 data sets on same day their valuse should be very similar because they are observed in the same monitoring window.
+   Solution: Use an average value amongst those 60 sets to stand for the observed temperature and humidity for each day.
+	
+   Diagram choice:
+	1. Double bar chart during this period. Where x axis is the date and the y value is the temperature and humidity.
+	2. A trending line chart will can be added to reflect the fluctuation during that period of time.
+	
+	
