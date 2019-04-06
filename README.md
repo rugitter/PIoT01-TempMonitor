@@ -11,3 +11,16 @@ Common command
 Make file executable
     - chmod +x 06_pycurlBullet.py
 
+Use Bluetooth module
+To pair devices see: https://www.cnet.com/how-to/how-to-setup-bluetooth-on-a-raspberry-pi-3/
+To import bluetooth module
+# sudo apt install bluetooth bluez blueman
+# pip3 install pybluez
+
+To use bt-device: 
+# sudo apt install bluez-tools
+
+Installed on Raspberry Pi
+See http://denvycom.com/blog/playing-audio-over-bluetooth-on-rasbperry-pi-command-line/
+# sudo apt-get install bluealsa
+

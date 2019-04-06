@@ -6,10 +6,15 @@ pi_cron = CronTab(user = "pi")
 pi_cron.remove_all()
 
 # Add new cron job.
-job = pi_cron.new(command = "/usr/bin/python /home/pi/piot/monitorAndNotify.py")
-
+job = pi_cron.new(command = "/usr/bin/python3 /home/pi/piot/monitorAndNotify.py")
 # Job settings.
 job.day.every(1)
 job.minute.every(1)
-job.hour.on(19)
+job.hour.during(9,10)
+
+# Add new cron job.
+job2 = pi_cron.new(command = "/usr/bin/python3 /home/pi/piot/pi_bluetooth.py")
+# Job settings.
+job2.minute.every(5)
+
 pi_cron.write()

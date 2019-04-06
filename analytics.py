@@ -44,6 +44,7 @@ with open(filename,'r')as file:
     plt.plot(dates,temps,c='red')
     plt.xlabel('',fontsize=22)
     plt.ylabel('Temperature(*C)', fontsize=14, color='r')
+    # plt.ylim(10,50)
     plt.tick_params(axis='both',which='major',labelsize=14)
     fig.autofmt_xdate()
 
