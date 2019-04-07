@@ -49,3 +49,8 @@ This need proper protocols are installed, otherwise it will show failed.
 # quit
 To quit bluetoothctl
 
+
+Data Analytics
+Required package
+# pip3 install seaborn
+

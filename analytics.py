@@ -5,51 +5,72 @@ import csv
 from datetime import datetime
 from matplotlib import pyplot as plt
 from matplotlib import dates as mdates
+
+import seaborn as sns
+import pandas as pd
 # plt.rcParams['font.sans-serif'] = ['SimHei']
 # plt.rcParams['axes.unicode_minus'] = False
 
-years = mdates.YearLocator()   # every year
-months = mdates.MonthLocator()  # every month
-yearFmt = mdates.DateFormatter('%m-%d')
+class Analytics:
+    def draw1(self):
+        years = mdates.YearLocator()   # every year
+        months = mdates.MonthLocator()  # every month
+        yearFmt = mdates.DateFormatter('%m-%d')
 
-filename='sense_data.csv'
-with open(filename,'r')as file:
-    reader=csv.reader(file)
-    header_row=next(reader)
+        filename='sense_data1.csv'
+        with open(filename,'r')as file:
+            reader=csv.reader(file)
+            header_row=next(reader)
 
-    dates, temps, humids= [], [], []
-    for row in reader:
-        current_date = datetime.strptime(row[0],"%Y-%m-%d")
-        dates.append(current_date)
-        #4.将字符串转换为整型数据
-        temps.append(int(row[1]))
-        humids.append(int(row[2]))
+            dates, temps, humids= [], [], []
+            for row in reader:
+                print(row)
+                current_date = datetime.strptime(row[0],"%Y/%m/%d")
+                dates.append(current_date)
+                
+                temps.append(float(row[1]))
+                humids.append(float(row[2]))
 
-    print(dates)
-    print(temps)
-    print(humids)
-    #5.根据数据绘制图形
-    fig=plt.figure(dpi=128,figsize=(8, 5.4))
+            fig=plt.figure(dpi=128,figsize=(8, 5))
+            
+            plt.title('Temperature & Humidity in March/April 2019 - Average',fontsize=18)
+            plt.plot(dates,temps,c='red')
+            plt.xlabel('',fontsize=14)
+            plt.ylabel('Temperature(*C)', fontsize=14, color='r')
+            # plt.ylim(10,50)
+            plt.tick_params(axis='both',which='major',labelsize=12)
+            fig.autofmt_xdate()
 
-    #6.将列表temps传个plot()方法
-    # ax1 = plt.plot()
-    # format the ticks
-    # plt.xaxis.set_major_locator(years)
-    # plt.gca().xaxis.set_major_formatter(yearFmt)
-    # plt.xaxis.set_minor_locator(months)
+            ax2 = plt.gca().twinx()
+            ax2.plot(dates,humids,c='blue')
+            plt.ylabel('Humidity(%)', fontsize=14, color='b')
+            
+            fig.savefig('plot1.png')
+            plt.show()
+            
+    def draw2(self):
+        filename='sense_data2.csv'
+        filename='AllData.csv'
+        my_data = pd.read_csv(filename)
+        print(my_data)
 
-    # ax1.fmt_xdata = mdates.DateFormatter('%m-%d')
-    #7.设置图形的格式
-    plt.title('Temperature and Humidity in March/April 2019',fontsize=20)
-    plt.plot(dates,temps,c='red')
-    plt.xlabel('',fontsize=22)
-    plt.ylabel('Temperature(*C)', fontsize=14, color='r')
-    # plt.ylim(10,50)
-    plt.tick_params(axis='both',which='major',labelsize=14)
-    fig.autofmt_xdate()
+        sns.set(style="whitegrid", color_codes=True)
+        plt.figure(dpi=128, figsize=(8, 5))
+        ax1 = sns.stripplot(x="Date", y="Temp", color = "red", jitter=True, data=my_data)
+        ax1.set_title("Temperature & Humidity in Mar/April 2019 - All Data", fontsize=18)
+        ax1.set_ylabel("Temperature (*C)", fontsize=18, color = "red")
 
-    ax2 = plt.gca().twinx()
-    ax2.plot(dates,humids,c='blue')
-    plt.ylabel('Humidity(%)', fontsize=14, color='b')
-    
-    plt.show()
+        xlabels = [x for x in ax1.get_xticklabels()]
+        ax1.set_xticklabels(xlabels)
+
+        ax2 = plt.gca().twinx()
+        ax2 = sns.stripplot(x="Date", y="Humid", color = "blue", jitter=True, data=my_data)
+        ax2.set_ylabel("Humidity (%)", fontsize=18, color = "blue")
+
+        plt.savefig('plot2.png')
+        plt.show()
+        
+if __name__ == "__main__":
+    ana = Analytics()
+    ana.draw1()
+    ana.draw2()
