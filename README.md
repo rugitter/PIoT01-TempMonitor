@@ -24,3 +24,28 @@ Installed on Raspberry Pi
 See http://denvycom.com/blog/playing-audio-over-bluetooth-on-rasbperry-pi-command-line/
 # sudo apt-get install bluealsa
 
+Raspberry Pi Command line to connect bluetooth
+# bluetoothctl
+
+# agent on
+
+# discoverable on
+You'll have three minutes for the following steps. On the master, start bluetoothctl and enter this:
+Code: Select all
+
+# scan on
+After some moments it should find the slave and print the Bluetooth device address, something like AA:BB:CC:DD:EE:FF. 
+When you found your desired device, you can type in
+# scan off
+# pair AA:BB:CC:DD:EE:FF
+Check the slave and follow any instructions; if asked to authorize, reply with 'yes', not 'y'. The master should indicate you are paired.
+
+# trust AA:BB:CC:DD:EE:FF
+and it should indicate trusted. You can now 'quit' bluetoothctl on both machines. 
+
+# connect AA:BB:CC:DD:EE:FF     - Not succed.
+This need proper protocols are installed, otherwise it will show failed.
+
+# quit
+To quit bluetoothctl
+
