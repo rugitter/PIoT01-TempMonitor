@@ -26,13 +26,3 @@ class BulletNotice:
             raise Exception()
 
         print("Notification sent.")
-
-    # # Main function.
-    # def main():
-    #     # ip_address = os.popen("hostname -I").read()
-    #     # send_notification(ip_address, "From Raspberry Pi")
-    #     send_notification("From Laptop", "I am a robot!")
-
-    # # Execute.
-    # if __name__ == "__main__":
-    #     main()

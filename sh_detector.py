@@ -24,8 +24,8 @@ class SHDetector:
         self.temp = round(self.sense.get_temperature(), 1)
         self.humid = round(self.sense.get_humidity())
         # If not connected Pi device, will print out on console
-        self.sense.show_message('Temp: {0:0.1f}c'.format(self.temp) + 
-        ' Humid: {0:0.0f}'.format(self.humid), scroll_speed=0.05)
+        self.sense.show_message('T:{0:0.1f} '.format(self.temp) + 
+            'H:{0:0.0f}'.format(self.humid), scroll_speed=0.05)
 
     # Not in use - Use to print data to Console
     def logData(self):
