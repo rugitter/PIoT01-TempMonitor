@@ -1,10 +1,45 @@
-1. Data type: Discrete data for temprature and humidity every minute during a period of time each day.
-   Number of data: 60 sets of data each day.
-   So it's not practical to plot them all in the diagram. 1. consuming computing power	2. For the 60 data sets on same day their valuse should be very similar because they are observed in the same monitoring window.
-   Solution: Use an average value amongst those 60 sets to stand for the observed temperature and humidity for each day.
-	
-   Diagram choice:
-	1. Double bar chart during this period. Where x axis is the date and the y value is the temperature and humidity.
-	2. A trending line chart will can be added to reflect the fluctuation during that period of time.
-	
-	
+1.  Data type: Discrete data for temperature and humidity every minute during a period of time each day.
+    Number of data: 60 sampling per day at an interval of 1 minute.
+    Time Span: 7 days (1/04/2019 - 7/04/2019)
+
+    Analysis:
+    1. For small amount of data per day we can use Scatter plot, which draws each record as an individual point. 
+    (implemented in graph 2)
+    However when more and more data are collected it's not so practical to plot them all in a diagram.
+    The reasons for this are: 
+        1.1 Data value will be very similar cos they are collected in a same hour.
+        1.2 The density of points make it hard to see individual value.
+        1.3 Consuming computing power.
+
+    2. Then we decide to draw Line Plot based on the calculated daily average temperature and humidity.
+    In order to smooth that a new method in the CreateReport class is created to generate another .csv file - sense_data1.
+    It consists of the average, high and low value of temperature and humidity on each day.
+
+    Other consideration:
+	1. Double bar chart can be used to represent temperature/humidity data at the same time for same day.
+       A trending line chart will can be added to reflect the fluctuation during that period of time.
+    2. Highest and lowest values can be added together with average value to give a better vision on graph 1.
+
+2.  Diagram description:
+    plot1.png : Line chart 
+            x axis - date of observation date
+            y axis - daily average temperature (red) and daily average humidity (blue)
+    plot2.png : Scatter plot chart
+            x axis - date of observation date
+            y axis - all temperature value of that day (red) and humidity values of that day (blue) - jittered
+
+3.  The following libraries are used in our analysis:
+    matplotlib  - Used to draw Line plot of the daily average values
+    seaborn     - Used to draw Scatter plot of all the data samples
+    pandas      - Used to easily manipulate data file, like .csv file
+    Reason to choose:
+        Both are suitable to draw line/point diagram for statistics.
+        Very popular and widely used in python environment.
+
+4.  Comparison of libraries:
+    matplotlib is one of the oldest plotting library for python. Although the complexity of its nature matplotlib is very 
+    powerful and comprehensive plotting tool. It can almost draw any diagram as desired with proper configuration. So it has 
+    very high flexibility.
+    seaborn is a very handy tool which can quickly and easily plot, especially in the area of statistics. It has very simple 
+    syntax and also I found the diagram it draws looks pretty than matplotlib. But the drawback is it is not as flexible as
+    matplotlib and has some limitation when advanced configuration is required.
