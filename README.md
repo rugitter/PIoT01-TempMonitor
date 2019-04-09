@@ -2,7 +2,7 @@
 
 This is to write a small IoT application using Raspberry Pi and Sense HAT in Python language. This is be a green house monitor which run at certain time of each day to monitor the temperature and humidity of the room.
 
-# Required package
+## Required package
 
 Intall pip3 - sudo apt install python3-pip
 pip3 install requests   - Required for pushbullet file
@@ -11,7 +11,7 @@ pip3 install seaborn    -Data Analytics. Required package
 * useful library
   - pytz - used to convert a UCT and timezone to a local time
 
-# This project has these files:
+## This project has these files:
 
 analytics.py
 compare.py
@@ -30,12 +30,12 @@ sensedata.db
 sh_detector.py
 virtual_sense_hat.py
 
-# Common command
+## Common command
 
 Make file executable:
 chmod +x 06_pycurlBullet.py
 
-# Use Bluetooth module
+## Use Bluetooth module
 
 To pair devices see: https://www.cnet.com/how-to/how-to-setup-bluetooth-on-a-raspberry-pi-3/
 To import bluetooth module:
