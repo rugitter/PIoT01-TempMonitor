@@ -50,7 +50,7 @@ class Analytics:
             
     def draw2(self):
         filename='sense_data2.csv'
-        filename='AllData.csv'
+        
         my_data = pd.read_csv(filename)
         print(my_data)
 

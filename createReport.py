@@ -75,5 +75,5 @@ if __name__ == "__main__":
 
     #CreateReport().CreatAllDataCSV(Database().read_dbdata())
 
-    CreateReport().CreatCSV(Database().read_daily_data)
+    CreateReport().CreatCSV(Database().read_daily_data())
 
