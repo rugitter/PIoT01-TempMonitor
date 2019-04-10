@@ -27,8 +27,8 @@ def search():
     for mac_address in nearby_devices:
         if mac_address == IPHONE_MAC:
             device_address = mac_address
-            device_name == bluetooth.lookup_name(mac_address, timeout = 5):
-            # print("Found {} with MAC address: {}".format(device_name, device_address))
+            device_name = bluetooth.lookup_name(mac_address, timeout = 5)
+            print("Found {} with MAC address: {}".format(device_name, device_address))
             break
         
     if device_address is not None:
