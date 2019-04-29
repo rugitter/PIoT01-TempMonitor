@@ -35,7 +35,7 @@ virtual_sense_hat.py
 Make file executable:
 chmod +x 06_pycurlBullet.py
 
-# Instructions to stop the show_ip.py: 
+### Instructions to stop the show_ip.py: 
 If you don’t want the script to run on boot anymore you can:
 • Just remove its execution permission: chmod -x show_ip.py
 • Rename or remove the file
